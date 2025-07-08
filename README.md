@@ -88,29 +88,66 @@ ALLOWED_HOSTS=*
 ### 3. Levantar el proyecto
 Desde la terminal levantar el proyecto con los siguiente comando
 ```
--docker-compose up --build (si aun no se levanto el proyecto)
+docker-compose up --build (si aun no se levanto el proyecto)
 
--docker-compose run --rm manage makemigrations (genera archivos de migraciones a partir de los modelos)
+docker-compose run --rm manage makemigrations (genera archivos de migraciones a partir de los modelos)
 
--docker-compose run --rm manage migrate (realiza migraciones en postgres)
+docker-compose run --rm manage migrate (realiza migraciones en postgres)
 
--docker-compose run --rm manage createsuperuser(si aún no se creo)
+docker-compose run --rm manage createsuperuser(si aún no se creo)
 ```
-Para hacer la carga de datos a las base de batos con los siguiente comando
 
-```
--docker-compose run --rm manage loaddata initial_data (archivo json para inicializar los datos con djjango en postgres)
+---
 
--python manage.py shell (abrir la terminal para cargar los datos a mongodb)
+## Carga de datos en MongoDB
 
--exec(open("initial_loader.py", encoding="utf-8").read()) (realiza la carga de los datos a mongodb con el archivo initial_loader)
-```
+### Opciones de conexión
+
+- **Desde el backend (dentro de Docker):**
+  - Host: `mongo`
+  - Puerto: `27017`
+  - URI interna:
+    ```
+    mongodb://root:example@mongo:27017/torneo?authSource=admin
+    ```
+- **Desde tu máquina local (por ejemplo, usando MongoDB Compass):**
+  - Host: `localhost`
+  - Puerto: `27019`
+  - URI externa:
+    ```
+    mongodb://root:example@localhost:27019/torneo?authSource=admin
+    ```
+
+### Carga automática de datos
+
+Para cargar los datos de ejemplo en MongoDB, sigue estos pasos:
+
+1. **Levanta los servicios:**
+   ```bash
+   docker compose up -d
+   ```
+
+2. **Entra al contenedor backend:**
+   ```bash
+   docker exec -it django-backend bash
+   ```
+
+3. **Ejecuta el script de carga:**
+   ```bash
+   python initial_loader.py
+   ```
+
+Verás mensajes de "Insertado: ..." por cada registro cargado.
+
+### Verifica los datos
+
+Puedes usar MongoDB Compass y conectarte con la URI externa para ver las colecciones y documentos cargados.
 
 ---
 
 ## Acceso a la aplicación
 
-- **Admin Django:** [http://localhost:8000/admin/](http://localhost:8000/admin/)
+- **Admin Django:** [http://localhost:8001/admin/](http://localhost:8001/admin/)
 
 ---
 
