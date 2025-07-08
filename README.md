@@ -147,7 +147,7 @@ Puedes usar MongoDB Compass y conectarte con la URI externa para ver las colecci
 
 ## Acceso a la aplicación
 
-- **Admin Django:** [http://localhost:8001/admin/](http://localhost:8001/admin/)
+- **Admin Django:** [http://localhost:8000/admin/](http://localhost:8000/admin/)
 
 ---
 
