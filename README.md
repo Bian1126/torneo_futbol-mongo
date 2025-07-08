@@ -1,4 +1,5 @@
-# Tutorial: Despliegue de "Torneo Futbol" en Django con Dcoker + MongoDB v2
+
+# Tutorial: Despliegue de "Torneo Futbol" en Django con Docker + MongoDB v2
 
 Práctico de Mapeo Objeto-Relacional para la materia Bases de Datos, Ingeniería en Sistemas, UTN FRVM.
 
@@ -33,16 +34,16 @@ Este proyecto implementa la gestión de un torneo de fútbol, integrando Postgre
 
 ## Requisitos Previos
 
-- Docker y Docker Compose instalados en tu sistema. Puedes consultar la **documentación oficial de Docker** (https://docs.docker.com/get-started/get-docker/) para la instalación.
-- Conocimientos básicos de Python, Django y mongodb (no excluyente, el tutorial es autoexplicativo).
+- Docker y Docker Compose instalados en tu sistema. Puedes consultar la [documentación oficial de Docker](https://docs.docker.com/get-started/get-docker/) para la instalación.
+- Conocimientos básicos de Python, Django y MongoDB (no excluyente, el tutorial es autoexplicativo).
 
 ---
 
 ## Recursos Útiles
 
-- [Tutorial oficial de Django](https://docs.djangoproject.com/en/2.0/intro/tutorial01/)
-- [Cómo crear un entorno virtual en Python](https://docs.djangoproject.com/en/2.0/intro/contributing/)
-- [Iniciar en mongodb](https://www.mongodb.com/docs/manual/tutorial/getting-started/)
+- [Tutorial oficial de Django](https://docs.djangoproject.com/en/5.0/intro/tutorial01/)
+- [Cómo crear un entorno virtual en Python](https://docs.python.org/3/tutorial/venv.html)
+- [Iniciar en MongoDB](https://www.mongodb.com/docs/manual/tutorial/getting-started/)
 
 ---
 
@@ -57,11 +58,11 @@ cd TORNEO-FUTBOL-mongoDB
 ```
 
 ### 2. Configuración de Variables de Entorno
-En el archivo .env.db utilizado para almacenar las variables de entorno necesarias para la conexión a la base de datos configurarlo de la siguiente manera:
+En el archivo `.env.db` utilizado para almacenar las variables de entorno necesarias para la conexión a las bases de datos, configurarlo de la siguiente manera:
 
->Puedes copiar todo este bloque y pegarlo directamente en tu archivo .env.db.
+>Puedes copiar todo este bloque y pegarlo directamente en tu archivo `.env.db`.
 
-```
+```env
 # PostgreSQL
 DATABASE_ENGINE=django.db.backends.postgresql
 POSTGRES_DB=postgres
@@ -86,15 +87,16 @@ ALLOWED_HOSTS=*
 ```
 
 ### 3. Levantar el proyecto
-Desde la terminal levantar el proyecto con los siguiente comando
-```
-docker-compose up --build (si aun no se levanto el proyecto)
+Desde la terminal, levantar el proyecto con los siguientes comandos:
 
-docker-compose run --rm manage makemigrations (genera archivos de migraciones a partir de los modelos)
+```bash
+docker-compose up --build  # Si aún no se levantó el proyecto
 
-docker-compose run --rm manage migrate (realiza migraciones en postgres)
+docker-compose run --rm manage makemigrations  # Genera archivos de migraciones a partir de los modelos
 
-docker-compose run --rm manage createsuperuser(si aún no se creo)
+docker-compose run --rm manage migrate  # Realiza migraciones en Postgres
+
+docker-compose run --rm manage createsuperuser  # (Si aún no se creó)
 ```
 
 ---
@@ -122,19 +124,14 @@ docker-compose run --rm manage createsuperuser(si aún no se creo)
 
 Para cargar los datos de ejemplo en MongoDB, sigue estos pasos:
 
-1. **Levanta los servicios:**
+1. **Levanta los servicios (si no están corriendo):**
    ```bash
-   docker compose up -d
+   docker-compose up -d
    ```
 
-2. **Entra al contenedor backend:**
+2. **Ejecuta el script de carga desde el contenedor:**
    ```bash
-   docker exec -it django-backend bash
-   ```
-
-3. **Ejecuta el script de carga:**
-   ```bash
-   python initial_loader.py
+   docker exec -it django-backend python initial_loader.py
    ```
 
 Verás mensajes de "Insertado: ..." por cada registro cargado.
@@ -156,41 +153,41 @@ Puedes usar MongoDB Compass y conectarte con la URI externa para ver las colecci
 ### 1. **db**
 > Contenedor de PostgreSQL.
 
-- Imagen: postgres:alpine
-- Volumen persistente: postgres-db
-- Variables de entorno: definidas en .env.db
-- Healthcheck incluido (espera a que el servicio esté listo)
+- Imagen: `postgres:alpine`
+- Volumen persistente: `postgres-db`
+- Variables de entorno: definidas en `.env.db`
+- Healthcheck incluido
 
 ### 2. **mongo**
-> Contenedor de Mongo.
+> Contenedor de MongoDB.
 
-- Imagen: mongo:7
-- Volumen persistente: mongo-data:/data/db
-- Variables de entorno: definidas en .env.db
+- Imagen: `mongo:7`
+- Volumen persistente: `mongo-data:/data/db`
+- Variables de entorno: definidas en `.env.db`
 
 ### 3. **backend**
 > Servidor de desarrollo Django.
 
-- Comando: python3 manage.py runserver 0.0.0.0:8000
+- Comando: `python3 manage.py runserver 0.0.0.0:8000`
 - Puerto expuesto: 8000
-- Código montado desde ./src
-- Depende de: db (espera a que esté saludable) mongo
+- Código montado desde `./src`
+- Depende de: `db` y `mongo`
 
 ### 4. **generate**
->Servicio opcional para crear el proyecto Django si no existe.
+> Servicio opcional para crear el proyecto Django si no existe.
 
-- Ejecuta: django-admin startproject app src
+- Ejecuta: `django-admin startproject app src`
 - Útil al iniciar el proyecto por primera vez
 - Usa permisos de root para crear carpetas
 
-### 4. **manage**
->Ejecuta comandos manage.py desde Docker.
+### 5. **manage**
+> Ejecuta comandos `manage.py` desde Docker.
 
-- Entrypoint: python3 manage.py
-- Ideal para migraciones, superusuario, etc.
-- Depende de: db (espera a que esté saludable)
-- Depende de: mongo
+- Entrypoint: `python3 manage.py`
+- Ideal para migraciones, creación de superusuario, carga de datos, etc.
+- Depende de: `db` y `mongo`
 
+---
 
 ## Estructura del Proyecto
 
@@ -198,24 +195,24 @@ Puedes usar MongoDB Compass y conectarte con la URI externa para ver las colecci
 TORNEO-FUTBOL-mongoDB/
 ├── src/                        # Código fuente de la aplicación
 │   ├── app/                    # Proyecto Django
-│   │   ├── settings.py         # Configuración global del proyecto (bases, apps, etc)
+│   │   ├── settings.py         # Configuración global del proyecto
 │   │   ├── urls.py             # Rutas principales del proyecto
-│   │   └── ...                 # Otros archivos de configuración
+│   │   └── ...
 │   ├── torneo/                 # Aplicación principal (lógica de negocio)
 │   │   ├── fixtures/           # Datos de ejemplo (carga inicial con loaddata)
 │   │   │   └── initial_data.json
 │   │   ├── migrations/         # Migraciones de base de datos
 │   │   ├── admin.py            # Registro de modelos en el panel de administración
 │   │   ├── apps.py             # Configuración de la app
-│   │   ├── models.py           # Definición de modelos SQL (estructura de la BD relacional)
-│   │   ├── models_mongo.py     # Definición de modelos NoSQL (estructura de la BD en MongoDB)
-│   │   ├── tests.py            # Pruebas automáticas
-│   │   ├── views.py            # Vistas (lógica del backend)
+│   │   ├── models.py           # Modelos SQL
+│   │   ├── models_mongo.py     # Modelos NoSQL (MongoDB)
+│   │   ├── tests.py
+│   │   ├── views.py
 │   │   └── ...
-│   └── manage.py               # Herramienta CLI de Django
-│   └── initial_loader.py  #Archivo de carga para pasar los datos de postgres a mongodb
-├── .env.db                     # Variables de entorno de la base de datos
-├── docker-compose.yml          # Definición de servicios Docker
+│   ├── manage.py               # CLI de Django
+│   └── initial_loader.py       # Script de carga Mongo desde Postgres
+├── .env.db                     # Variables de entorno
+├── docker-compose.yml          # Definición de servicios
 ├── Dockerfile                  # Imagen personalizada del backend
 ├── init.sh                     # Script de inicio rápido (bash)
 ├── init.ps1                    # Script de inicio rápido (PowerShell)
