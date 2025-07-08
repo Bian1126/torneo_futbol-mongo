@@ -18,7 +18,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'torneo',
+    'torneo.apps.TorneoConfig',
+
 ]
 
 MIDDLEWARE = [

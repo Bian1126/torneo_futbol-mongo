@@ -105,8 +105,11 @@ class Inscripcion(Document):
     categoria = ReferenceField(Categoria, reverse_delete_rule=CASCADE)
     torneo = ReferenceField(Torneo, reverse_delete_rule=CASCADE)
 
-    def __str__(self):
-        return f'{self.equipo.nombre} - {self.torneo.nombre} ({self.categoria.nombre})'
+    # Campos nuevos para mostrar en texto
+    equipo_nombre = StringField()
+    categoria_nombre = StringField()
+    torneo_nombre = StringField()
+
 
 
 # Partido jugado entre dos equipos
@@ -120,6 +123,3 @@ class Partido(Document):
     equipo2 = ReferenceField(Equipo, reverse_delete_rule=CASCADE)
     cancha = ReferenceField(Cancha, reverse_delete_rule=CASCADE)
     torneo = ReferenceField(Torneo, reverse_delete_rule=CASCADE)
-
-    def __str__(self):
-        return f'{self.equipo1.nombre} vs {self.equipo2.nombre}'
