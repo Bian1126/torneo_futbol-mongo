@@ -1,0 +1,69 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres
+    restart: unless-stopped
+    env_file:
+      - .env.db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - net
+
+  mongo:
+    image: mongo:7
+    container_name: mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: torneo
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27019:27017"
+    networks:
+      - net
+
+  backend:
+    build: .
+    container_name: django-backend
+    command: python manage.py runserver 0.0.0.0:8000
+    env_file:
+      - .env.db
+    volumes:
+      - ./src:/code
+    working_dir: /code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - mongo
+    networks:
+      - net
+
+  manage:
+    build: .
+    container_name: django-manage
+    entrypoint: python manage.py
+    env_file:
+      - .env.db
+    volumes:
+      - ./src:/code
+    working_dir: /code
+    depends_on:
+      - postgres
+      - mongo
+    networks:
+      - net
+
+
+volumes:
+  postgres-data:
+  mongo-data:
+
+networks:
+  net:

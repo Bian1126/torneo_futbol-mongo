@@ -1,0 +1,270 @@
+[
+  {
+    "model": "torneo.tipodocumento",
+    "pk": 1,
+    "fields": {
+      "nombre": "DNI",
+      "descripcion": "Documento Nacional de Identidad"
+    }
+  },
+  {
+    "model": "torneo.tipodocumento",
+    "pk": 2,
+    "fields": {
+      "nombre": "PASAPORTE",
+      "descripcion": "Pasaporte internacional"
+    }
+  },
+  {
+    "model": "torneo.categoria",
+    "pk": 1,
+    "fields": {
+      "nombre": "PRIMERA DIVISIÓN",
+      "descripcion": "Máxima categoría del fútbol argentino"
+    }
+  },
+  {
+    "model": "torneo.categoria",
+    "pk": 2,
+    "fields": {
+      "nombre": "PRIMERA NACIONAL",
+      "descripcion": "Segunda división del fútbol argentino"
+    }
+  },
+  {
+    "model": "torneo.categoria",
+    "pk": 3,
+    "fields": {
+      "nombre": "PRIMERA B",
+      "descripcion": "Tercera división del fútbol argentino"
+    }
+  },
+  {
+    "model": "torneo.equipo",
+    "pk": 1,
+    "fields": {
+      "nombre": "Club Atlético Boca Juniors",
+      "ciudad": "Buenos Aires",
+      "fechaDeFundacion": "1905-04-03"
+    }
+  },
+  {
+    "model": "torneo.equipo",
+    "pk": 2,
+    "fields": {
+      "nombre": "Club Atlético River Plate",
+      "ciudad": "Buenos Aires",
+      "fechaDeFundacion": "1901-05-25"
+    }
+  },
+  {
+    "model": "torneo.equipo",
+    "pk": 3,
+    "fields": {
+      "nombre": "Racing Club",
+      "ciudad": "Avellaneda",
+      "fechaDeFundacion": "1903-03-25"
+    }
+  },
+  {
+    "model": "torneo.equipo",
+    "pk": 4,
+    "fields": {
+      "nombre": "Club Atlético Independiente",
+      "ciudad": "Avellaneda",
+      "fechaDeFundacion": "1905-01-01"
+    }
+  },
+  {
+    "model": "torneo.jugador",
+    "pk": 1,
+    "fields": {
+      "nombre": "Edinson",
+      "apellido": "Cavani",
+      "sexo": "Masculino",
+      "numeroDocumento": 35123456,
+      "fechaNacimiento": "1987-02-14",
+      "nroCamiseta": 10,
+      "posicion": "Delantero",
+      "tipoDocumento": 1,
+      "equipo": 1
+    }
+  },
+  {
+    "model": "torneo.jugador",
+    "pk": 2,
+    "fields": {
+      "nombre": "Marcos",
+      "apellido": "Rojo",
+      "sexo": "Masculino",
+      "numeroDocumento": 32456789,
+      "fechaNacimiento": "1990-03-20",
+      "nroCamiseta": 6,
+      "posicion": "Defensor",
+      "tipoDocumento": 1,
+      "equipo": 1
+    }
+  },
+  {
+    "model": "torneo.jugador",
+    "pk": 3,
+    "fields": {
+      "nombre": "Franco",
+      "apellido": "Armani",
+      "sexo": "Masculino",
+      "numeroDocumento": 31987654,
+      "fechaNacimiento": "1986-10-16",
+      "nroCamiseta": 1,
+      "posicion": "Arquero",
+      "tipoDocumento": 1,
+      "equipo": 2
+    }
+  },
+  {
+    "model": "torneo.jugador",
+    "pk": 4,
+    "fields": {
+      "nombre": "Julián",
+      "apellido": "Álvarez",
+      "sexo": "Masculino",
+      "numeroDocumento": 44123456,
+      "fechaNacimiento": "2000-01-31",
+      "nroCamiseta": 9,
+      "posicion": "Delantero",
+      "tipoDocumento": 1,
+      "equipo": 2
+    }
+  },
+  {
+    "model": "torneo.jugador",
+    "pk": 5,
+    "fields": {
+      "nombre": "Juan Fernando",
+      "apellido": "Quintero",
+      "sexo": "Masculino",
+      "numeroDocumento": 26789123,
+      "fechaNacimiento": "1993-01-18",
+      "nroCamiseta": 8,
+      "posicion": "Mediocampista",
+      "tipoDocumento": 1,
+      "equipo": 3
+    }
+  },
+  {
+    "model": "torneo.jugador",
+    "pk": 6,
+    "fields": {
+      "nombre": "Leandro",
+      "apellido": "Fernández",
+      "sexo": "Masculino",
+      "numeroDocumento": 41234567,
+      "fechaNacimiento": "1995-07-25",
+      "nroCamiseta": 11,
+      "posicion": "Delantero",
+      "tipoDocumento": 1,
+      "equipo": 4
+    }
+  },
+  {
+    "model": "torneo.cancha",
+    "pk": 1,
+    "fields": {
+      "nombre": "La Bombonera",
+      "ubicacion": "Brandsen 805, La Boca, Buenos Aires"
+    }
+  },
+  {
+    "model": "torneo.cancha",
+    "pk": 2,
+    "fields": {
+      "nombre": "El Monumental",
+      "ubicacion": "Av. Pres. Figueroa Alcorta 7597, Núñez, Buenos Aires"
+    }
+  },
+  {
+    "model": "torneo.torneo",
+    "pk": 1,
+    "fields": {
+      "nombre": "Liga Profesional Argentina 2025",
+      "fechaInicio": "2025-07-01",
+      "fechaFin": "2025-12-15",
+      "categoria": 1
+    }
+  },
+  {
+    "model": "torneo.torneo",
+    "pk": 2,
+    "fields": {
+      "nombre": "Copa Argentina 2025",
+      "fechaInicio": "2025-08-01",
+      "fechaFin": "2025-11-30",
+      "categoria": 1
+    }
+  },
+  {
+    "model": "torneo.inscripcion",
+    "pk": 1,
+    "fields": {
+      "fechaInscripcion": "2025-06-01",
+      "equipo": 1,
+      "categoria": 1,
+      "torneo": 1
+    }
+  },
+  {
+    "model": "torneo.inscripcion",
+    "pk": 2,
+    "fields": {
+      "fechaInscripcion": "2025-06-02",
+      "equipo": 2,
+      "categoria": 1,
+      "torneo": 1
+    }
+  },
+  {
+    "model": "torneo.inscripcion",
+    "pk": 3,
+    "fields": {
+      "fechaInscripcion": "2025-06-03",
+      "equipo": 3,
+      "categoria": 1,
+      "torneo": 1
+    }
+  },
+  {
+    "model": "torneo.inscripcion",
+    "pk": 4,
+    "fields": {
+      "fechaInscripcion": "2025-06-04",
+      "equipo": 4,
+      "categoria": 1,
+      "torneo": 1
+    }
+  },
+  {
+    "model": "torneo.partido",
+    "pk": 1,
+    "fields": {
+      "fechaPartido": "2025-07-15",
+      "horaPartido": "21:00:00",
+      "resultado": "2-1",
+      "equipo1": 1,
+      "equipo2": 2,
+      "cancha": 1,
+      "torneo": 1
+    }
+  },
+  {
+    "model": "torneo.partido",
+    "pk": 2,
+    "fields": {
+      "fechaPartido": "2025-07-20",
+      "horaPartido": "19:00:00",
+      "resultado": "1-0",
+      "equipo1": 3,
+      "equipo2": 4,
+      "cancha": 2,
+      "torneo": 1
+    }
+  }
+]
