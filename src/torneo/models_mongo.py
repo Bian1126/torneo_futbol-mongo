@@ -37,11 +37,23 @@ class TipoDocumento(NombreAbstract):
     descripcion = StringField(required=False)
 
 
+# Ciudad del equipo
+class Ciudad(Document):
+    postgres_id = IntField(required=True, unique=True)
+    nombreCiudad = StringField(required=True, max_length=100)
+    codigoPostal = StringField(required=True, max_length=10)
+    provincia = StringField(required=True, max_length=100)
+
+    def __str__(self):
+        return self.nombreCiudad
+
+
 # Equipo que participa en los torneos
 class Equipo(Document):
     postgres_id = IntField(required=True, unique=True)
     nombre = StringField(required=True, max_length=100)
-    ciudad = StringField(required=True, max_length=100)
+    ciudad = ReferenceField(Ciudad, reverse_delete_rule=CASCADE)
+    ciudad_nombre = StringField()
     fechaDeFundacion = DateField(required=True)
 
     def __str__(self):
@@ -123,3 +135,9 @@ class Partido(Document):
     equipo2 = ReferenceField(Equipo, reverse_delete_rule=CASCADE)
     cancha = ReferenceField(Cancha, reverse_delete_rule=CASCADE)
     torneo = ReferenceField(Torneo, reverse_delete_rule=CASCADE)
+
+    # NUEVOS CAMPOS DE TEXTO
+    equipo1_nombre = StringField()
+    equipo2_nombre = StringField()
+    cancha_nombre = StringField()
+    torneo_nombre = StringField()

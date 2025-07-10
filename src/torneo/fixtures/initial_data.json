@@ -1,5 +1,23 @@
 [
   {
+    "model": "torneo.ciudad",
+    "pk": 1,
+    "fields": {
+      "nombreCiudad": "Buenos Aires",
+      "codigoPostal": "C1000",
+      "provincia": "Buenos Aires"
+    }
+  },
+  {
+    "model": "torneo.ciudad",
+    "pk": 2,
+    "fields": {
+      "nombreCiudad": "Avellaneda",
+      "codigoPostal": "B1870",
+      "provincia": "Buenos Aires"
+    }
+  },
+  {
     "model": "torneo.tipodocumento",
     "pk": 1,
     "fields": {
@@ -44,7 +62,7 @@
     "pk": 1,
     "fields": {
       "nombre": "Club Atlético Boca Juniors",
-      "ciudad": "Buenos Aires",
+      "ciudad": 1,
       "fechaDeFundacion": "1905-04-03"
     }
   },
@@ -53,7 +71,7 @@
     "pk": 2,
     "fields": {
       "nombre": "Club Atlético River Plate",
-      "ciudad": "Buenos Aires",
+      "ciudad": 1,
       "fechaDeFundacion": "1901-05-25"
     }
   },
@@ -62,7 +80,7 @@
     "pk": 3,
     "fields": {
       "nombre": "Racing Club",
-      "ciudad": "Avellaneda",
+      "ciudad": 2,
       "fechaDeFundacion": "1903-03-25"
     }
   },
@@ -71,7 +89,7 @@
     "pk": 4,
     "fields": {
       "nombre": "Club Atlético Independiente",
-      "ciudad": "Avellaneda",
+      "ciudad": 2,
       "fechaDeFundacion": "1905-01-01"
     }
   },

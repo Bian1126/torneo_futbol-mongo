@@ -2,7 +2,7 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from .models import (
     Equipo, Torneo, Jugador, Partido, Inscripcion,
-    Cancha, Categoria, TipoDocumento
+    Cancha, Categoria, TipoDocumento, Ciudad
 )
 from .models_mongo import (
     Equipo as EquipoDoc,
@@ -13,6 +13,7 @@ from .models_mongo import (
     Cancha as CanchaDoc,
     Categoria as CategoriaDoc,
     TipoDocumento as TipoDocumentoDoc,
+    Ciudad as CiudadDoc,
 )
 
 from mongoengine import connect, disconnect
@@ -99,14 +100,18 @@ def delete_cancha(sender, instance, **kwargs):
 @receiver(post_save, sender=Equipo)
 def sync_equipo(sender, instance, **kwargs):
     try:
-        EquipoDoc.objects(postgres_id=instance.id).update_one(
-            set__nombre=instance.nombre,
-            set__ciudad=instance.ciudad,
-            set__fechaDeFundacion=instance.fechaDeFundacion,
-            upsert=True
-        )
+        ciudad_doc = CiudadDoc.objects(postgres_id=instance.ciudad.id).first()
+        if ciudad_doc:
+            EquipoDoc.objects(postgres_id=instance.id).update_one(
+                set__nombre=instance.nombre,
+                set__ciudad=ciudad_doc,
+                set__ciudad_nombre=instance.ciudad.nombreCiudad if instance.ciudad else "",
+                set__fechaDeFundacion=instance.fechaDeFundacion,
+                upsert=True
+            )
     except Exception as e:
         print(f"[ERROR EN SYNC_EQUIPO] {e}")
+
 
 @receiver(post_delete, sender=Equipo)
 def delete_equipo(sender, instance, **kwargs):
@@ -114,6 +119,28 @@ def delete_equipo(sender, instance, **kwargs):
         EquipoDoc.objects(postgres_id=instance.id).delete()
     except Exception as e:
         print(f"[ERROR EN DELETE_EQUIPO] {e}")
+
+# ================================
+# CIUDAD
+# ================================
+@receiver(post_save, sender=Ciudad)
+def sync_ciudad(sender, instance, **kwargs):
+    try:
+        CiudadDoc.objects(postgres_id=instance.id).update_one(
+            set__nombreCiudad=instance.nombreCiudad,
+            set__codigoPostal=instance.codigoPostal,
+            set__provincia=instance.provincia,
+            upsert=True
+        )
+    except Exception as e:
+        print(f"[ERROR EN SYNC_CIUDAD] {e}")
+
+@receiver(post_delete, sender=Ciudad)
+def delete_ciudad(sender, instance, **kwargs):
+    try:
+        CiudadDoc.objects(postgres_id=instance.id).delete()
+    except Exception as e:
+        print(f"[ERROR EN DELETE_CIUDAD] {e}")
 
 # ================================
 # TORNEO
@@ -189,9 +216,13 @@ def sync_partido(sender, instance, **kwargs):
                 set__horaPartido=str(instance.horaPartido),
                 set__resultado=instance.resultado,
                 set__equipo1=equipo1_doc,
+                set__equipo1_nombre=instance.equipo1.nombre if instance.equipo1 else "",
                 set__equipo2=equipo2_doc,
-                set__torneo=torneo_doc,
+                set__equipo2_nombre=instance.equipo2.nombre if instance.equipo2 else "",
                 set__cancha=cancha_doc,
+                set__cancha_nombre=instance.cancha.nombre if instance.cancha else "",
+                set__torneo=torneo_doc,
+                set__torneo_nombre=instance.torneo.nombre if instance.torneo else "",
                 upsert=True
             )
     except Exception as e:
@@ -216,10 +247,10 @@ def sync_inscripcion(sender, instance, **kwargs):
         if equipo_doc and torneo_doc and categoria_doc:
            InscripcionDoc.objects(postgres_id=instance.id).update_one(
                set__equipo=equipo_doc,
-               set__categoria=categoria_doc,
-               set__torneo=torneo_doc,
                set__equipo_nombre=instance.equipo.nombre if instance.equipo else "",
+               set__categoria=categoria_doc,
                set__categoria_nombre=instance.categoria.nombre if instance.categoria else "",
+               set__torneo=torneo_doc,
                set__torneo_nombre=instance.torneo.nombre if instance.torneo else "",
                set__fechaInscripcion=instance.fechaInscripcion,
                upsert=True

@@ -3,6 +3,14 @@ from django.core.exceptions import ValidationError
 from django.forms.models import BaseInlineFormSet
 from torneo.models import *
 
+# -------------------------------
+# CIUDAD
+# -------------------------------
+@admin.register(Ciudad)
+class CiudadAdmin(admin.ModelAdmin):
+    list_display = ('nombreCiudad', 'codigoPostal', 'provincia')
+    search_fields = ['nombreCiudad', 'provincia']
+    list_filter = ['provincia']
 
 # -------------------------------
 # TIPO DOCUMENTO
@@ -12,16 +20,18 @@ class TipoDocumentoAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'descripcion')
     search_fields = ['nombre']
 
-
 # -------------------------------
 # EQUIPO
 # -------------------------------
 @admin.register(Equipo)
 class EquipoAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'ciudad', 'fechaDeFundacion')
-    search_fields = ['nombre', 'ciudad']
-    list_filter = ['ciudad']
+    list_display = ('nombre', 'get_ciudad_nombre', 'fechaDeFundacion')
+    search_fields = ['nombre', 'ciudad__nombreCiudad']
+    list_filter = ['ciudad__provincia']
 
+    def get_ciudad_nombre(self, obj):
+        return obj.ciudad.nombreCiudad
+    get_ciudad_nombre.short_description = 'Ciudad'
 
 # -------------------------------
 # JUGADOR
@@ -32,7 +42,6 @@ class JugadorAdmin(admin.ModelAdmin):
     search_fields = ['nombre', 'apellido', 'numeroDocumento']
     list_filter = ['equipo', 'posicion', 'tipoDocumento']
 
-
 # -------------------------------
 # CANCHA
 # -------------------------------
@@ -41,7 +50,6 @@ class CanchaAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'ubicacion')
     search_fields = ['nombre']
 
-
 # -------------------------------
 # CATEGORÍA
 # -------------------------------
@@ -49,7 +57,6 @@ class CanchaAdmin(admin.ModelAdmin):
 class CategoriaAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'descripcion')
     search_fields = ['nombre']
-
 
 # -------------------------------
 # INLINE INSCRIPCIÓN (Dentro del Torneo)
@@ -73,7 +80,6 @@ class InscripcionInline(admin.TabularInline):
     verbose_name = "Inscripción de equipo"
     verbose_name_plural = "Inscripciones de equipos"
 
-
 # -------------------------------
 # INLINE PARTIDOS (Dentro del Torneo)
 # -------------------------------
@@ -83,7 +89,6 @@ class PartidoInline(admin.TabularInline):
     extra = 0
     verbose_name = "Partido del torneo"
     verbose_name_plural = "Partidos del torneo"
-
 
 # -------------------------------
 # TORNEO
@@ -100,7 +105,6 @@ class TorneoAdmin(admin.ModelAdmin):
         return obj.partido_set.count()
     total_partidos.short_description = 'Cantidad de partidos'
 
-
 # -------------------------------
 # INSCRIPCIÓN (por fuera también)
 # -------------------------------
@@ -109,7 +113,6 @@ class InscripcionAdmin(admin.ModelAdmin):
     list_display = ('equipo', 'torneo', 'fechaInscripcion')
     search_fields = ['equipo__nombre', 'torneo__nombre']
     list_filter = ['torneo', 'equipo']
-
 
 # -------------------------------
 # PARTIDO

@@ -43,10 +43,27 @@ class TipoDocumento(NombreAbstract):
         verbose_name_plural = 'Tipos de documento'
 
 
+#Ciudad del equipo
+class Ciudad(models.Model):
+    nombreCiudad = models.CharField(_('Nombre de la ciudad'), max_length=100)
+    codigoPostal = models.CharField(_('Código postal'), max_length=10)
+    provincia = models.CharField(_('Provincia'), max_length=100)
+
+    def __str__(self):
+        return self.nombreCiudad
+
+    class Meta:
+        verbose_name = 'Ciudad'
+        verbose_name_plural = 'Ciudades'
+
 # Equipo que participa en los torneos
 class Equipo(models.Model):
     nombre = models.CharField(_('Nombre del equipo'), max_length=100)
-    ciudad = models.CharField(_('Ciudad'), max_length=100)
+    ciudad = models.ForeignKey(
+        Ciudad,
+        on_delete=models.PROTECT,
+        verbose_name=_('Ciudad')
+    )
     fechaDeFundacion = models.DateField(_('Fecha de fundación'))
 
     def __str__(self):

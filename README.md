@@ -120,21 +120,6 @@ docker-compose run --rm manage createsuperuser  # (Si aún no se creó)
     mongodb://root:example@localhost:27019/torneo?authSource=admin
     ```
 
-### Carga automática de datos
-
-Para cargar los datos de ejemplo en MongoDB, sigue estos pasos:
-
-1. **Levanta los servicios (si no están corriendo):**
-   ```bash
-   docker-compose up -d
-   ```
-
-2. **Ejecuta el script de carga desde el contenedor:**
-   ```bash
-   docker exec -it django-backend python initial_loader.py
-   ```
-
-Verás mensajes de "Insertado: ..." por cada registro cargado.
 
 ### Verifica los datos
 
