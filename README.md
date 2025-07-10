@@ -1,17 +1,22 @@
 
-# Tutorial: Despliegue de "Torneo Futbol" en Django con Docker + MongoDB v2
+# Tutorial: Despliegue de "Torneo Fútbol" en Django con Docker + MongoDB v2
 
 Práctico de Mapeo Objeto-Relacional para la materia Bases de Datos, Ingeniería en Sistemas, UTN FRVM.
 
 **Stack:**  
-Docker · Django 5.x · Alpine Linux · Python 3.13 · PostgreSQL 15 · Mongo 7 · Mongoengine 0.29 · Gunicorn · MongoDB Compass
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Docker Desktop](https://img.shields.io/badge/Docker%20Desktop-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/products/docker-desktop)
+[![Django 5.1.11](https://img.shields.io/badge/Django%205.1.11-092E20?style=for-the-badge&logo=django&logoColor=white)](https://www.djangoproject.com/)
+[![Alpine Linux](https://img.shields.io/badge/Alpine%20Linux-0D597F?style=for-the-badge&logo=alpinelinux&logoColor=white)](https://alpinelinux.org/)
+[![Python 3.13](https://img.shields.io/badge/Python%203.13-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![PostgreSQL 15](https://img.shields.io/badge/PostgreSQL%2015-336791?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![MongoDB 7](https://img.shields.io/badge/MongoDB%207-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![MongoEngine 0.29](https://img.shields.io/badge/MongoEngine%200.29-4FAA41?style=for-the-badge&logo=python&logoColor=white)](https://mongoengine.org/)
+[![Gunicorn](https://img.shields.io/badge/Gunicorn-499848?style=for-the-badge&logo=gunicorn&logoColor=white)](https://gunicorn.org/)
+[![MongoDB Compass](https://img.shields.io/badge/MongoDB%20Compass-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/products/compass)
 
----
-
-## Referencia Rápida
-
-**Mantenido por Grupo 03**  
-**Integrantes:**
+## **Mantenido por Grupo 03**  
+### **Integrantes:**
 - Bergas, Victoria
 - Corti, Elba
 - Giovanardi Blanco, Felipe
@@ -21,28 +26,21 @@ Docker · Django 5.x · Alpine Linux · Python 3.13 · PostgreSQL 15 · Mongo 7 
 - Porporatto, Lázaro
 - Rubio Falcon, Carolina Inés
 
-**Descargo de Responsabilidad:**  
+## **Descargo de Responsabilidad:**  
 El código proporcionado se ofrece "tal cual", sin garantía de ningún tipo, expresa o implícita. En ningún caso los autores o titulares de derechos de autor serán responsables de cualquier reclamo, daño u otra responsabilidad.
 
----
-
 ## Introducción
-
 Este proyecto tiene como finalidad aplicar los contenidos vistos en la Cátedra de Bases de Datos mediante el desarrollo de un sistema de gestión de torneos de fútbol. Integra PostgreSQL y MongoDB para practicar conceptos de modelado y persistencia de datos en modelos relacionales y no relacionales.
 
 ---
 
 ## Requisitos Previos
-
 - Docker y Docker Compose instalados en tu sistema. Puedes consultar la [documentación oficial de Docker](https://docs.docker.com/get-started/get-docker/) para la instalación.
 - Recomendado: Docker Desktop instalado y en ejecución (recomendado para manejar visualmente los contenedores y facilitar la administración). [Descargar Docker Desktop](https://www.docker.com/products/docker-desktop/) 
 - Recomendado: MongoDB Compass instalado para poder visualizar y administrar fácilmente la base de datos MongoDB. [Descargar MongoDB Compass](https://www.mongodb.com/products/compass)
 - Conocimientos básicos de Python, Django y MongoDB (no excluyente, el tutorial es autoexplicativo).
 
----
-
 ## Recursos Útiles
-
 - [Tutorial oficial de Django](https://docs.djangoproject.com/en/5.0/intro/tutorial01/)
 - [Cómo crear un entorno virtual en Python](https://docs.python.org/3/tutorial/venv.html)
 - [Iniciar en MongoDB](https://www.mongodb.com/docs/manual/tutorial/getting-started/)
@@ -53,10 +51,10 @@ Este proyecto tiene como finalidad aplicar los contenidos vistos en la Cátedra 
 
 ---
 
-## Instrucciones para levantar el proyecto
+## **Instrucciones para levantar el proyecto**
 
 ### 1. Clonar el repositorio
-> Puedes copiar todo este bloque y pegarlo directamente en tu terminal.
+> *Puedes copiar todo este bloque y pegarlo directamente en tu terminal.*
 
 ```bash
 git clone https://github.com/Bian1126/torneo_futbol-mongo.git
@@ -66,8 +64,9 @@ cd TORNEO-FUTBOL-mongoDB
 ### 2. Configuración de Variables de Entorno
 En el archivo `.env.db` utilizado para almacenar las variables de entorno necesarias para la conexión a las bases de datos, configurarlo de la siguiente manera:
 
->Puedes copiar todo este bloque y pegarlo directamente en tu archivo `.env.db`. (no es necesario si se clona el repositorio)
+> *Puedes copiar todo este bloque y pegarlo directamente en tu archivo `.env.db`. (no es necesario si se clona el repositorio)*
 
+```conf
 # PostgreSQL
 DATABASE_ENGINE=django.db.backends.postgresql
 POSTGRES_DB=postgres
@@ -91,9 +90,10 @@ MONGO_PORT=27017
 SECRET_KEY=clave-insegura-para-dev-torneo
 DEBUG=True
 ALLOWED_HOSTS=*
+```
 
 ### 3. Levantar el proyecto
->Desde la terminal, levantar el proyecto con los siguientes comandos:
+> *Desde la terminal, levantar el proyecto con los siguientes comandos:*
 
 ```bash
 docker-compose up --build  # Si aún no se levantó el proyecto, aún así se puede implementar si ya se levantó también.
@@ -109,7 +109,7 @@ docker-compose run --rm manage createsuperuser  # (Si aún no se creó)
 ```
 
 ## 4. Carga de datos inicial: 
->Puedes hacer la carga de datos a las bases de batos con los siguientes comandos:
+> *Puedes hacer la carga de datos a las bases de batos con los siguientes comandos:*
 
 ```bash
 
@@ -120,7 +120,7 @@ python load_and_sync.py #Ejecuta el script de carga y sincronizacion de datos qu
 ```
 
 ## 5. Detener el proyecto:
->Puedes hacerlo si ya terminaste con tu trabajo
+> *Puedes hacerlo si ya terminaste con tu trabajo*
  
 ```bash
 # Opción 1: Si usaste el comando docker-compose up --build tenes que volver a esa terminal.
@@ -139,7 +139,7 @@ docker-compose down
 ## 6. Acceso a la aplicación
 
 - **Admin Django:** [http://localhost:8000/admin/](http://localhost:8000/admin/)
->Una vez adentro poner el usuario y contraseña del superusuario creado al levantar el proyecto.
+> Una vez adentro poner el usuario y contraseña del superusuario creado al levantar el proyecto.
 
 ---
 
