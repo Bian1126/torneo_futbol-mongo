@@ -139,7 +139,7 @@ docker-compose down
 ## 6. Acceso a la aplicación
 
 - **Admin Django:** [http://localhost:8000/admin/](http://localhost:8000/admin/)
-> Una vez adentro poner el usuario y contraseña del superusuario creado al levantar el proyecto.
+> *Una vez adentro poner el usuario y contraseña del superusuario creado al levantar el proyecto.*
 
 ---
 
@@ -163,8 +163,8 @@ docker-compose down
 
 ### 8. Verifica los datos
 
-Puedes usar MongoDB Compass y conectarte con la URI externa para ver las colecciones y documentos cargados.
-También puedes chequearlo en la base de datos de postgres desde en algun terminal. Se recomienda el terminal del Docker Desktop.
+> *Puedes usar MongoDB Compass y conectarte con la URI externa para ver las colecciones y documentos cargados.*
+*También puedes chequearlo en la base de datos de postgres desde en algun terminal. Se recomienda el terminal del Docker Desktop.*
 
 ---
 
