@@ -155,6 +155,7 @@ def sync_torneo(sender, instance, **kwargs):
                 set__fechaInicio=instance.fechaInicio,
                 set__fechaFin=instance.fechaFin,
                 set__categoria=categoria_doc,
+                set__categoria_nombre=instance.categoria.nombre if instance.categoria else "",
                 upsert=True
             )
     except Exception as e:
@@ -185,7 +186,9 @@ def sync_jugador(sender, instance, **kwargs):
                 set__nroCamiseta=instance.nroCamiseta,
                 set__posicion=instance.posicion,
                 set__equipo=equipo_doc,
+                set__equipo_nombre=instance.equipo.nombre if instance.equipo else "",
                 set__tipoDocumento=tipo_doc,
+                set__tipo_documento_nombre=instance.tipoDocumento.nombre if instance.tipoDocumento else "",
                 upsert=True
             )
     except Exception as e:

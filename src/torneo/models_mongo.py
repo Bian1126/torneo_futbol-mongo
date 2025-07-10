@@ -74,6 +74,10 @@ class Jugador(Document):
     tipoDocumento = ReferenceField(TipoDocumento, reverse_delete_rule=CASCADE)
     equipo = ReferenceField(Equipo, reverse_delete_rule=CASCADE)
 
+    # Campos nuevos para mostrar en texto
+    equipo_nombre = StringField()
+    tipo_documento_nombre = StringField()
+
     def __str__(self):
         return f'{self.nombre} {self.apellido}'
 
@@ -103,6 +107,9 @@ class Torneo(Document):
     fechaFin = DateField(required=True)
 
     categoria = ReferenceField(Categoria, reverse_delete_rule=CASCADE)
+
+    # Campos nuevos para mostrar en texto
+    categoria_nombre = StringField()
 
     def __str__(self):
         return self.nombre
