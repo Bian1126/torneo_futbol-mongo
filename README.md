@@ -108,7 +108,7 @@ docker-compose run --rm manage migrate  # Realiza migraciones en Postgres
 docker-compose run --rm manage createsuperuser  # (Si aún no se creó)
 ```
 
-## 4. Carga de datos inicial: 
+### 4. Carga de datos inicial: 
 > *Puedes hacer la carga de datos a las bases de batos con los siguientes comandos:*
 
 ```bash
@@ -119,7 +119,7 @@ docker-compose exec backend bash #Para ejecutar comandos dentro del entorno del 
 python load_and_sync.py #Ejecuta el script de carga y sincronizacion de datos que está en la raíz del proyecto dentro del contenedor backend.
 ```
 
-## 5. Detener el proyecto:
+### 5. Detener el proyecto:
 > *Puedes hacerlo si ya terminaste con tu trabajo*
  
 ```bash
@@ -136,7 +136,7 @@ docker-compose down
 ```
 
 ---
-## 6. Acceso a la aplicación
+### 6. Acceso a la aplicación
 
 - **Admin Django:** [http://localhost:8000/admin/](http://localhost:8000/admin/)
 > *Una vez adentro poner el usuario y contraseña del superusuario creado al levantar el proyecto.*
