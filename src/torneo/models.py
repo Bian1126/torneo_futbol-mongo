@@ -210,3 +210,4 @@ class Partido(models.Model):
         verbose_name = 'Partido'
         verbose_name_plural = 'Partidos'
         ordering = ['fechaPartido', 'horaPartido']
+

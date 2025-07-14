@@ -93,7 +93,19 @@ ALLOWED_HOSTS=*
 ```
 
 ### 3. Levantar el proyecto
-> *Desde la terminal, levantar el proyecto con los siguientes comandos:*
+> **Si es la primera vez que se levanta el proyecto, desde la terminal ingresa los comandos de alguna de las dos opciones:**
+> *Opción 1 (modo semi-automático):*
+
+**Windows**
+```bash
+./init.ps1
+```
+
+**Linux**
+```bash
+. init.sh
+```
+> *Opción 2 (modo manual):*
 
 ```bash
 docker-compose up --build  # Si aún no se levantó el proyecto, aún así se puede implementar si ya se levantó también.
